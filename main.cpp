@@ -1,7 +1,7 @@
 #include <iostream>
 #include<string>
 
-using namespace std;
+using namespace std;//yasaterrr
 
 
 int main()
@@ -10,4 +10,4 @@ int main()
 	cout << "Hello" << endl; 
 	system("pause");
 	return 0;
-}
+}//huighb
