@@ -1,17 +1,10 @@
 #include <iostream>
-<<<<<<< Updated upstream
-#include<string>
-=======
 #include <fstream>
 #include <string>
 #include <sstream>
 
->>>>>>> Stashed changes
 using namespace std;
-//yasater
 
-<<<<<<< Updated upstream
-=======
 struct Customer {
     string name;
     int mobileNo;
@@ -25,7 +18,6 @@ struct Car {
     double distanceTraveled;
     bool isRented; // Indicate whether the car is currently rented.
     Customer rentedBy; // The customer that is currently renting the car. If the car is not rented, this value will be null.
-
 };
 
 int numCustomers = 0;
@@ -67,6 +59,6 @@ Customer* readCustomerData(string filename) {
 
 int main()
 {
+
     return 0;
 }
->>>>>>> Stashed changes
