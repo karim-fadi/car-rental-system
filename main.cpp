@@ -11,6 +11,7 @@ struct Customer {
     string address;
 };
 
+
 struct Admin {
     string username;
     string password;
@@ -96,6 +97,7 @@ Admin* readAdminData(string filename) {
     file.close();
     return admins;
 }
+
 
 int main()
 {
