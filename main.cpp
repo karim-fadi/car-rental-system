@@ -11,6 +11,12 @@ struct Customer {
     string address;
 };
 
+
+struct Admin {
+    string username;
+    string password;
+};
+
 struct Car {
     string brand;
     string model;
@@ -21,6 +27,7 @@ struct Car {
 };
 
 int numCustomers = 0;
+int numAdmins = 0;
 
 Customer* readCustomerData(string filename) {
     ifstream file(filename);
@@ -56,6 +63,41 @@ Customer* readCustomerData(string filename) {
     return customers;
 
 }
+
+Admin* readAdminData(string filename) {
+    ifstream file(filename);
+
+    if (!file.is_open())
+    {
+        cout << "Can't Open file" << endl;
+        return nullptr;
+    }
+
+    string line;
+    getline(file, line);
+    numAdmins = stoi(line);
+    Admin* admins = new Admin[numAdmins];
+
+    for (int i = 0; i < numAdmins; ++i)
+    {
+        getline(file, line);
+        stringstream ss(line);
+        Admin admin;
+
+        if (!(ss >> admin.username >> admin.password))
+        {
+            delete[] admins;
+            return nullptr;
+        }
+
+        admins[i] = admin;
+
+    }
+
+    file.close();
+    return admins;
+}
+
 
 int main()
 {
