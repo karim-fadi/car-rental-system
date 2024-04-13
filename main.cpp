@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -7,6 +8,7 @@ struct Customer {
     int mobileNo;
     string address;
 };
+
 
 struct Admin {
     string username;
@@ -60,4 +62,7 @@ int main()
 {
 
 	return 0;
+
+
+
 }
