@@ -9,6 +9,7 @@ struct Customer {
     string address;
 };
 
+
 struct Admin {
     string username;
     string password;
@@ -37,13 +38,31 @@ Admin admins[] = {
 
 // Initialize data for cars
 Car cars[] = {
-    {"Toyota", "Camry", "Red", 10000.0, false, customers[0]},
-    {"Honda", "Civic", "Blue", 15000.0, false, {}},
+    {"Toyota", "Camry", "Red", 10000.0, true, customers[0]},
+    {"Honda", "Civic", "Blue", 15000.0, true, customers[0]},
 };
 
-int main() {
+void rentCar(Car cars[], int size, int carIndex, Customer customer) {
+    if (carIndex >= 0 && carIndex < size) {
+        if (!cars[carIndex].isRented) {
+            cars[carIndex].isRented = true;
+            cars[carIndex].rentedBy = customer;
+            cout << "Car rented successfully.\n";
+        }
+        else {
+            cout << "Sorry, the car is already rented.\n";
+        }
+    }
+    else {
+        cout << "Invalid car index.\n";
+    }
+}
 
-    system("pause");
+int main()
+{
 
-    return 0;
+	return 0;
+
+
+
 }
