@@ -37,8 +37,24 @@ Car cars[] =
     {"Toyota", "Camry", "Red", 10000.0, true, customers[0]},
     {"Honda", "Civic", "Blue", 15000.0, true, customers[0]}
 };
-void rentCar(Car cars[], int size, int carIndex, Customer customer)
-{
+
+// Function to remove a car from the array by index
+void removeCar(Car cars[], int& carCount, int index) {
+    if (index < 0 || index >= carCount) {
+        cout << "Invalid index. Cannot remove car." << endl;
+        return;
+    }
+
+    // Shift elements to fill the gap
+    for (int i = index; i < carCount - 1; ++i) {
+        cars[i] = cars[i + 1];
+    }
+
+    // Decrement the car count
+    carCount--;
+}
+
+void rentCar(Car cars[], int size, int carIndex, Customer customer) {
     if (carIndex >= 0 && carIndex < size) {
         if (!cars[carIndex].isRented) {
             cars[carIndex].isRented = true;
@@ -172,4 +188,5 @@ void identity()
 int main()
 {
     identity();
+    return 0;
 }
