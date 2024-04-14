@@ -41,6 +41,22 @@ Car cars[] = {
     {"Honda", "Civic", "Blue", 15000.0, false, {}},
 };
 
+// Function to remove a car from the array by index
+void removeCar(Car cars[], int& carCount, int index) {
+    if (index < 0 || index >= carCount) {
+        cout << "Invalid index. Cannot remove car." << endl;
+        return;
+    }
+
+    // Shift elements to fill the gap
+    for (int i = index; i < carCount - 1; ++i) {
+        cars[i] = cars[i + 1];
+    }
+
+    // Decrement the car count
+    carCount--;
+}
+
 int main() {
 
     system("pause");
