@@ -34,8 +34,8 @@ Admin admins[2] = {
 // Initialize data for cars
 Car cars[] =
 {
-    {"Toyota", "Camry", "Red", 10000.0, true, customers[0]},
-    {"Honda", "Civic", "Blue", 15000.0, true, customers[0]}
+    {"toyota", "camry", "red", 10000.0, true, customers[0]},
+    {"honda", "civic", "blue", 15000.0, true, customers[0]}
 };
 
 // Function to remove a car from the array by index
@@ -185,8 +185,21 @@ void identity()
         }
     } while (choice == 'y' || choice == 'Y');
 }
+void AddCar()
+{
+    if (numCars < 10) {
+        Car newCar;
+        cout << "Enter brand, model, color, and distance traveled of the car:" << endl;
+        cin >> newCar.brand >> newCar.model >> newCar.color >> newCar.distanceTraveled;
+        newCar.isRented = false; //added cars are not rented
+        cars[numCars++] = newCar; //add the new car to the array
+        cout << "Car added successfully" << endl;
+    }
+    else {
+        cout << "Maximum number of cars reached" << endl;
+    }
+}
 int main()
 {
-    identity();
     return 0;
 }
