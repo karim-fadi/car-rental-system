@@ -220,6 +220,55 @@ void listOfCars(Car cars[], int carCount) {
         cout << "\t" << "  " << customers[i].name << "\t " << endl;
     }
 }
+
+void carUpdate(int index) 
+{
+            //cout << "Current details of car with ID " << carID << ":" << endl;
+            cout << "NAME: " << cars[index].brand << endl;
+            cout << "MODEL: " << cars[index].model << endl;
+            cout << "COLOUR: " << cars[index].color << endl;
+            cout << "DISTANCE TRAVELLED: " << cars[index].distanceTraveled << endl; 
+            //cout << "PRICE: " << cars[index].price << endl; 
+
+            // Prompt the user to choose which part of the data he wishes to update
+            cout << "Enter 1 to update name " << endl; 
+            cout << "Enter 2 to update model " << endl; 
+            cout << "Enter 3 to update colour " << endl; 
+            cout << "Enter 4 to update top speed " << endl; 
+            cout << "Enter 5 to update price " << endl; 
+
+            int choice;
+            cin >> choice;
+
+            switch(choice) 
+            {
+                case 1:
+                    cout << "Enter a new name: ";
+                    cin >> cars[index].brand;
+                    break;
+                case 2:
+                    cout << "Enter a new model: ";
+                    cin >> cars[index].model;
+                    break;
+                case 3:
+                    cout << "Enter a new colour: ";
+                    cin >> cars[index].color;
+                    break;
+                 case 4:
+                    cout << "Enter a new top speed: ";
+                    cin >> cars[index].distanceTraveled;
+                    break;
+                 //case 5:
+                   // cout << "Enter a new price: ";
+                    //cin >> cars[index].price;
+                    //break;
+                default:
+                    cout << "Invalid choice." << endl;
+            }
+            cout << "Car details are updated successfully." << endl;
+            return;
+}
+
 int main() 
 {
     return 0;
