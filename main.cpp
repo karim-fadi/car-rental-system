@@ -203,7 +203,34 @@ void AddCar()
         cout << "Maximum number of cars reached" << endl;
     }
 }
+
+
+void checkCarAvailability()
+{
+    int index;
+    cout << "Enter the index of the car to check availability : ";
+    cin >> index;
+    if (index > carCount || index < 1)
+    {
+        cout << "invalid index.\n";
+        return;
+    }
+    else if (carCount == 0)
+    {
+        cout << "No cars available to check.\n";
+        return;
+    }
+    else if (cars[index - 1].isRented == false)
+    {
+        cout << "car is available to rent.\n";
+        return;
+    }
+    cout << "car is rented.\n";
+}
+
+
 int main()
 {
+    checkCarAvailability();
     return 0;
 }
