@@ -1,11 +1,7 @@
 #include <iostream>
 #include <string>
-
 using namespace std;
-
-
 int carCount = 2;
-
 struct Customer {
     string name;
     string mobileNo;
@@ -74,7 +70,7 @@ void rentCar(Car cars[], int size, int carIndex, Customer customer) {
         cout << "Invalid car index.\n";
     }
 }
-void LoginAsAnAdmin()
+void loginAsAnAdmin()
 {
     string username, password;
     cout << "Please sign in" << endl;
@@ -105,7 +101,7 @@ void LoginAsAnAdmin()
     } while (LoggedIn == false);
 }
 
-void LoginAsACustomer()
+void loginAsACustomer()
 {
     Customer newCustomer;
     char login;
@@ -179,11 +175,11 @@ void identity()
         cin >> identity;
         if (identity == "admin")
         {
-            LoginAsAnAdmin();
+            loginAsAnAdmin();
             break;
         }
         else if (identity == "customer")
-            LoginAsACustomer();
+            loginAsACustomer();
         else
         {
             cout << "Invalid choice" << endl;
@@ -192,22 +188,6 @@ void identity()
         }
     } while (choice == 'y' || choice == 'Y');
 }
-void AddCar()
-{
-    if (numCars < 10) {
-        Car newCar;
-        cout << "Enter brand, model, color, and distance traveled of the car:" << endl;
-        cin >> newCar.brand >> newCar.model >> newCar.color >> newCar.distanceTraveled;
-        newCar.isRented = false; //added cars are not rented
-        cars[numCars++] = newCar; //add the new car to the array
-        cout << "Car added successfully" << endl;
-    }
-    else {
-        cout << "Maximum number of cars reached" << endl;
-    }
-}
-
-
 void checkCarAvailability()
 {
     int index;
@@ -230,27 +210,17 @@ void checkCarAvailability()
     }
     cout << "car is rented.\n";
 }
-
-
-
-
-
 //list of car function
-
-void listofcars(Car cars[], int carCount) {
+void listOfCars(Car cars[], int carCount) {
 	cout << "<<<< Currently available cars are >>>> \n";
     cout << endl;
     cout << "Brand\t " << "Model\t " << "Color \t" << "DisntanceTravelled\t "  << "RenterName\t " << endl;
     for (int i = 0; i < carCount; i++) {
         cout << cars[i].brand << "\t " << cars[i].model << "\t " << cars[i].color << "\t" << "\t" << cars[i].distanceTraveled << "\t";
         cout << "\t" << "  " << customers[i].name << "\t " << endl;
-
     }
 }
-int main() {
-    listofcars(cars, carCount);
-
-    checkCarAvailability();
+int main() 
+{
     return 0;
-
 }
