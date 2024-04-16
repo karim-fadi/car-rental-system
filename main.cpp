@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 int carCount = 2;
 
 struct Customer {
@@ -42,6 +43,198 @@ Car cars[] =
     {"honda", "civic", "blue", 15000.0, true, customers[0]}
 };
 
+// Function to remove a car from the array by index
+void removeCar(Car cars[], int& carCount, int index) {
+    if (index < 0 || index >= carCount) {
+        cout << "Invalid index. Cannot remove car." << endl;
+        return;
+    }
+
+    // Shift elements to fill the gap
+    for (int i = index; i < carCount - 1; ++i) {
+        cars[i] = cars[i + 1];
+    }
+
+    // Decrement the car count
+    carCount--;
+}
+
+void rentCar(Car cars[], int size, int carIndex, Customer customer) {
+    if (carIndex >= 0 && carIndex < size) {
+        if (!cars[carIndex].isRented) {
+            cars[carIndex].isRented = true;
+            cars[carIndex].rentedBy = customer;
+            cout << "Car rented successfully.\n";
+        }
+        else {
+            cout << "Sorry, the car is already rented.\n";
+        }
+    }
+    else {
+        cout << "Invalid car index.\n";
+    }
+}
+void LoginAsAnAdmin()
+{
+    string username, password;
+    cout << "Please sign in" << endl;
+    cout << "Enter your username and password:" << endl;
+    bool LoggedIn = false;
+    do {
+        cin >> username >> password;
+        for (int i = 0; i < 2; i++)
+        {
+            if ((username == admins[i].username) && (password == admins[i].password))
+            {
+                LoggedIn = true;
+                cout << "You are signed in successfully" << endl;
+                cout << "Please enter a number:" << endl;
+                cout << "Press 1 to add a car" << endl;
+                cout << "Press 2 to remove a car" << endl;
+                cout << "Press 3 to show list of cars" << endl;
+                cout << "Press 4 to check available cars" << endl;
+                cout << "Press 5 to update car detailes" << endl;
+                break;
+            }
+        }
+        if (LoggedIn == false)
+        {
+            cout << "Incorrect username or password" << endl;
+            cout << "Please reneter your username and password:" << endl;
+        }
+    } while (LoggedIn == false);
+}
+
+void LoginAsACustomer()
+{
+    Customer newCustomer;
+    char login;
+    string username;
+    string mobilenum;
+    string address;
+    cout << "Do you want to sign up or sign in?" << ' ' << "(U for signing up) and (I for signing in)" << endl;
+    cin >> login;
+    if (login == 'U' || login == 'u')
+    {
+        cout << "Creat new account" << endl;
+        cout << "Enter new username:";
+        do {
+            cin >> newCustomer.name;
+            bool found = false;
+            for (int i = 0; i < 2; i++)
+            {
+                if (newCustomer.name == customers[i].name)
+                {
+                    found = true;
+                    cout << "Someone already has that username" << endl;
+                    cout << "Please enter another username:";
+                    break;
+                }
+            }
+            if (found == false)
+            {
+                cout << "username created successfully" << endl;
+                cout << "Enter your mobile number:";
+                cin >> newCustomer.mobileNo;
+                cout << "Enter your address:";
+                cin >> newCustomer.address;
+                customers[2] = newCustomer;
+                cout << "You are signed up successfully" << endl;
+                cout << "Press 6 to rent a car" << endl;
+                break;
+            }
+        } while (true);
+    }
+    else if (login == 'I' || login == 'i')
+    {
+        cout << "Enter your username , mobile number and address" << endl;
+        bool found = false;
+        do {
+            cin >> username >> mobilenum >> address;
+            for (int i = 0; i < 2; i++)
+            {
+                if ((username == customers[i].name) && (mobilenum == customers[i].mobileNo) && (address == customers[i].address))
+                {
+                    found = true;
+                    cout << "You are signed in successfully" << endl;
+                    cout << "Press 6 to rent a car" << endl;
+                    break;
+                }
+            }
+            if (found == false)
+            {
+                cout << "Incorrect username or mobile number or address" << endl;
+                cout << "Please renter your username , mobile number and address:" << endl;
+            }
+        } while (found == false);
+    }
+}
+
+void identity()
+{
+    string identity;
+    char choice = 'N';
+    do {
+        cout << "Login as an admin or customer?" << endl;
+        cin >> identity;
+        if (identity == "admin")
+        {
+            LoginAsAnAdmin();
+            break;
+        }
+        else if (identity == "customer")
+            LoginAsACustomer();
+        else
+        {
+            cout << "Invalid choice" << endl;
+            cout << "Do you want to try again?" << ' ' << "(Y/N)" << endl;
+            cin >> choice;
+        }
+    } while (choice == 'y' || choice == 'Y');
+}
+void AddCar()
+{
+    if (numCars < 10) {
+        Car newCar;
+        cout << "Enter brand, model, color, and distance traveled of the car:" << endl;
+        cin >> newCar.brand >> newCar.model >> newCar.color >> newCar.distanceTraveled;
+        newCar.isRented = false; //added cars are not rented
+        cars[numCars++] = newCar; //add the new car to the array
+        cout << "Car added successfully" << endl;
+    }
+    else {
+        cout << "Maximum number of cars reached" << endl;
+    }
+}
+
+
+void checkCarAvailability()
+{
+    int index;
+    cout << "Enter the index of the car to check availability : ";
+    cin >> index;
+    if (index > carCount || index < 1)
+    {
+        cout << "invalid index.\n";
+        return;
+    }
+    else if (carCount == 0)
+    {
+        cout << "No cars available to check.\n";
+        return;
+    }
+    else if (cars[index - 1].isRented == false)
+    {
+        cout << "car is available to rent.\n";
+        return;
+    }
+    cout << "car is rented.\n";
+}
+
+
+
+
+
 //list of car function
 
 void listofcars(Car cars[], int carCount) {
@@ -56,4 +249,8 @@ void listofcars(Car cars[], int carCount) {
 }
 int main() {
     listofcars(cars, carCount);
+
+    checkCarAvailability();
+    return 0;
+
 }
