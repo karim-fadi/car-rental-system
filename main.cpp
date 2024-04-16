@@ -3,6 +3,9 @@
 
 using namespace std;
 
+
+int carCount = 2;
+
 struct Customer {
     string name;
     string mobileNo;
@@ -229,8 +232,25 @@ void checkCarAvailability()
 }
 
 
-int main()
-{
+
+
+
+//list of car function
+
+void listofcars(Car cars[], int carCount) {
+	cout << "<<<< Currently available cars are >>>> \n";
+    cout << endl;
+    cout << "Brand\t " << "Model\t " << "Color \t" << "DisntanceTravelled\t "  << "RenterName\t " << endl;
+    for (int i = 0; i < carCount; i++) {
+        cout << cars[i].brand << "\t " << cars[i].model << "\t " << cars[i].color << "\t" << "\t" << cars[i].distanceTraveled << "\t";
+        cout << "\t" << "  " << customers[i].name << "\t " << endl;
+
+    }
+}
+int main() {
+    listofcars(cars, carCount);
+
     checkCarAvailability();
     return 0;
+
 }
