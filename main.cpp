@@ -32,8 +32,10 @@ Admin admins[2] = {
     {"admin1", "password1"},
     {"admin2", "password2"}
 };
+//max size of array of cars is 20
+const int maxCars = 20;
 // Initialize data for cars
-Car cars[] =
+Car cars[maxCars] =
 {
     {"toyota", "camry", "red", 10000.0, true, customers[0]},
     {"honda", "civic", "blue", 15000.0, true, customers[0]}
@@ -268,7 +270,30 @@ void carUpdate(int index)
             cout << "Car details are updated successfully." << endl;
             return;
 }
-
+//function to add car
+void addCar(Car cars[], int& carCount) 
+{
+    if ((carCount < maxCars) && (carCount > 0))
+    {
+        Car newcar; //new variable of type car
+        cout << "Enter brand:";
+        cin >> newcar.brand; cout << endl;
+        cout << "Enter model:";
+        cin >> newcar.model; cout << endl;
+        cout << "Enter color:";
+        cin >> newcar.color; cout << endl;
+        cout << "Enter distance traveled by car:";
+        cin >> newcar.distanceTraveled; cout << endl;
+        newcar.isRented = false;
+        cars[carCount++] = newcar; //increment counter and add the newcar to the array
+        cout << "car rented successfully and these are the details of the car:" << endl; //print data of the rented car
+        cout << "Brand:" << newcar.brand << " " << "Model:" << newcar.model << " " << "Color:" << newcar.color << " " << "Distance traveled:" << newcar.distanceTraveled << endl;
+    }
+    else
+    {
+        cout << "can not add cars,max reached" << endl;
+    }
+}
 int main() 
 {
     return 0;
