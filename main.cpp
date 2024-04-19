@@ -1,7 +1,15 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
+
+void customerMenu();
+void adminMenu();
+
 int carCount = 2;
+int signedInCustomerIndex = 0;
+const int maxCars = 20;
+
 struct Customer {
     string name;
     string mobileNo;
@@ -22,47 +30,84 @@ struct Car {
     Customer rentedBy; // The customer that is currently renting the car. If the car is not rented, this value will be null.
 };
 
-// Initialize data for customers
-Customer customers[3] = {
-    {"john","+1234567890", "mainstreet"},
-    {"smith","+9876543210", "hegazstreet"}
+Customer customers[20] = {
+    {"john","123456789", "mainstreet"},
+    {"smith","987654321", "hegazstreet"}
 };
-// Initialize data for admins
+
 Admin admins[2] = {
     {"admin1", "password1"},
     {"admin2", "password2"}
 };
-//max size of array of cars is 20
-const int maxCars = 20;
-// Initialize data for cars
+
 Car cars[maxCars] =
 {
     {"toyota", "camry", "red", 10000.0, true, customers[0]},
-    {"honda", "civic", "blue", 15000.0, true, customers[0]}
+    {"honda", "civic", "blue", 15000.0, false, {}}
 };
 
-// Function to remove a car from the array by index
-void removeCar(Car cars[], int& carCount, int index) {
+void addCar(Car cars[], int& carCount)
+{
+    if ((carCount < maxCars) && (carCount > 0))
+    {
+        Car newcar;
+        cout << "Enter brand: ";
+        cin >> newcar.brand; cout << endl;
+        cout << "Enter model: ";
+        cin >> newcar.model; cout << endl;
+        cout << "Enter color: ";
+        cin >> newcar.color; cout << endl;
+        cout << "Enter distance traveled by car: ";
+        cin >> newcar.distanceTraveled; cout << endl;
+        newcar.isRented = false;
+        cars[carCount++] = newcar;
+        cout << "Car added successfully and these are the details of the car: " << endl << endl;
+        cout << "Brand: " << newcar.brand << "  " << "Model: " << newcar.model << "  " << "Color: " << newcar.color << "  " << "Distance traveled: " << newcar.distanceTraveled << endl << endl;
+    }
+    else
+    {
+        cout << "Can't add cars, max reached." << endl;
+    }
+}
+
+void removeCar(Car cars[], int& carCount) {
+    cout << "Enter the index of the car you want to remove: ";
+
+    int index;
+    cin >> index;
+    index -= 1;
+
     if (index < 0 || index >= carCount) {
         cout << "Invalid index. Cannot remove car." << endl;
         return;
     }
 
-    // Shift elements to fill the gap
     for (int i = index; i < carCount - 1; ++i) {
         cars[i] = cars[i + 1];
     }
 
-    // Decrement the car count
     carCount--;
+
+    cout << endl;
+    cout << "Car Removed Successfully\n";
+    cout << endl;
 }
 
-void rentCar(Car cars[], int size, int carIndex, Customer customer) {
-    if (carIndex >= 0 && carIndex < size) {
+void rentCar(Car cars[], int carCount) {
+    cout << "Enter The index of the car you want to rent: ";
+    int carIndex;
+    cin >> carIndex;
+    carIndex -= 1;
+
+    Customer customer = customers[signedInCustomerIndex];
+
+    if (carIndex >= 0 && carIndex < carCount) {
         if (!cars[carIndex].isRented) {
             cars[carIndex].isRented = true;
             cars[carIndex].rentedBy = customer;
+            cout << endl;
             cout << "Car rented successfully.\n";
+            cout << endl;
         }
         else {
             cout << "Sorry, the car is already rented.\n";
@@ -72,6 +117,7 @@ void rentCar(Car cars[], int size, int carIndex, Customer customer) {
         cout << "Invalid car index.\n";
     }
 }
+
 void loginAsAnAdmin()
 {
     string username, password;
@@ -85,13 +131,9 @@ void loginAsAnAdmin()
             if ((username == admins[i].username) && (password == admins[i].password))
             {
                 LoggedIn = true;
+                cout << endl;
                 cout << "You are signed in successfully" << endl;
-                cout << "Please enter a number:" << endl;
-                cout << "Press 1 to add a car" << endl;
-                cout << "Press 2 to remove a car" << endl;
-                cout << "Press 3 to show list of cars" << endl;
-                cout << "Press 4 to check available cars" << endl;
-                cout << "Press 5 to update car detailes" << endl;
+                cout << endl;
                 break;
             }
         }
@@ -112,6 +154,7 @@ void loginAsACustomer()
     string address;
     cout << "Do you want to sign up or sign in?" << ' ' << "(U for signing up) and (I for signing in)" << endl;
     cin >> login;
+    cout << endl;
     if (login == 'U' || login == 'u')
     {
         cout << "Creat new account" << endl;
@@ -137,8 +180,9 @@ void loginAsACustomer()
                 cout << "Enter your address:";
                 cin >> newCustomer.address;
                 customers[2] = newCustomer;
+                cout << endl;
                 cout << "You are signed up successfully" << endl;
-                cout << "Press 6 to rent a car" << endl;
+                cout << endl;
                 break;
             }
         } while (true);
@@ -154,8 +198,10 @@ void loginAsACustomer()
                 if ((username == customers[i].name) && (mobilenum == customers[i].mobileNo) && (address == customers[i].address))
                 {
                     found = true;
+                    signedInCustomerIndex = i;
+                    cout << endl;
                     cout << "You are signed in successfully" << endl;
-                    cout << "Press 6 to rent a car" << endl;
+                    cout << endl;
                     break;
                 }
             }
@@ -173,23 +219,34 @@ void identity()
     string identity;
     char choice = 'N';
     do {
-        cout << "Login as an admin or customer?" << endl;
+        cout << "Login as an admin or customer? (Enter e to exit system)" << endl;
         cin >> identity;
+        cout << endl;
         if (identity == "admin")
         {
             loginAsAnAdmin();
-            break;
+            adminMenu();
         }
         else if (identity == "customer")
+        {
             loginAsACustomer();
+            customerMenu();
+        }
+
+        else if (identity == "e")
+        {
+            break;
+        }
+            
         else
         {
             cout << "Invalid choice" << endl;
             cout << "Do you want to try again?" << ' ' << "(Y/N)" << endl;
             cin >> choice;
         }
-    } while (choice == 'y' || choice == 'Y');
+    } while (true);
 }
+
 void checkCarAvailability()
 {
     int index;
@@ -197,104 +254,175 @@ void checkCarAvailability()
     cin >> index;
     if (index > carCount || index < 1)
     {
+        cout << endl;
         cout << "invalid index.\n";
+        cout << endl;
         return;
     }
     else if (carCount == 0)
     {
+        cout << endl;
         cout << "No cars available to check.\n";
+        cout << endl;
         return;
     }
     else if (cars[index - 1].isRented == false)
     {
+        cout << endl;
         cout << "car is available to rent.\n";
+        cout << endl;
         return;
     }
     cout << "car is rented.\n";
 }
-//list of car function
+
 void listOfCars(Car cars[], int carCount) {
-	cout << "<<<< Currently available cars are >>>> \n";
     cout << endl;
-    cout << "Brand\t " << "Model\t " << "Color \t" << "DisntanceTravelled\t "  << "RenterName\t " << endl;
+    cout << "<<<< Currently available cars are >>>> \n";
+    cout << endl;
+    cout << "   Brand\t " << "Model\t " << "Color \t" << "Disntance Traveled\t " << "Renter Name\t " << endl;
     for (int i = 0; i < carCount; i++) {
-        cout << cars[i].brand << "\t " << cars[i].model << "\t " << cars[i].color << "\t" << "\t" << cars[i].distanceTraveled << "\t";
-        cout << "\t" << "  " << customers[i].name << "\t " << endl;
+        cout << i + 1 << ") " << cars[i].brand << "\t " << cars[i].model << "\t " << cars[i].color << "\t" << "\t" << cars[i].distanceTraveled << "\t";
+        if (cars[i].isRented == true)
+            cout << "\t" << "  " << cars[i].rentedBy.name << "\t " << endl;
+
+        cout << endl;
     }
+    cout << endl;
 }
 
-void carUpdate(int index) 
+void carUpdate()
 {
-            //cout << "Current details of car with ID " << carID << ":" << endl;
-            cout << "NAME: " << cars[index].brand << endl;
-            cout << "MODEL: " << cars[index].model << endl;
-            cout << "COLOUR: " << cars[index].color << endl;
-            cout << "DISTANCE TRAVELLED: " << cars[index].distanceTraveled << endl; 
-            //cout << "PRICE: " << cars[index].price << endl; 
+    cout << "Enter the index of the car you want to update its details: ";
+    int index;
+    cin >> index;
 
-            // Prompt the user to choose which part of the data he wishes to update
-            cout << "Enter 1 to update name " << endl; 
-            cout << "Enter 2 to update model " << endl; 
-            cout << "Enter 3 to update colour " << endl; 
-            cout << "Enter 4 to update top speed " << endl; 
-            cout << "Enter 5 to update price " << endl; 
+    if (index > carCount || index < 1)
+    {
+        cout << endl;
+        cout << "invalid index.\n";
+        cout << endl;
+        return;
+    }
 
-            int choice;
-            cin >> choice;
+    cout << endl;
+    cout << "Current Details: " << endl << endl;
 
-            switch(choice) 
-            {
-                case 1:
-                    cout << "Enter a new name: ";
-                    cin >> cars[index].brand;
-                    break;
-                case 2:
-                    cout << "Enter a new model: ";
-                    cin >> cars[index].model;
-                    break;
-                case 3:
-                    cout << "Enter a new colour: ";
-                    cin >> cars[index].color;
-                    break;
-                 case 4:
-                    cout << "Enter a new top speed: ";
-                    cin >> cars[index].distanceTraveled;
-                    break;
-                 //case 5:
-                   // cout << "Enter a new price: ";
-                    //cin >> cars[index].price;
-                    //break;
-                default:
-                    cout << "Invalid choice." << endl;
-            }
-            cout << "Car details are updated successfully." << endl;
+    cout << "BRAND: " << cars[index].brand << endl;
+    cout << "MODEL: " << cars[index].model << endl;
+    cout << "COLOR: " << cars[index].color << endl;
+    cout << "DISTANCE TRAVELED: " << cars[index].distanceTraveled << endl;
+    cout << endl;
+
+    cout << "Enter 1 to update brand " << endl;
+    cout << "Enter 2 to update model " << endl;
+    cout << "Enter 3 to update color " << endl;
+    cout << "Enter 4 to update distance travelled " << endl;
+    cout << endl;
+
+    int choice;
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        cout << "Enter a new brand: ";
+        cin >> cars[index].brand;
+        break;
+    case 2:
+        cout << "Enter a new model: ";
+        cin >> cars[index].model;
+        break;
+    case 3:
+        cout << "Enter a new color: ";
+        cin >> cars[index].color;
+        break;
+    case 4:
+        cout << "Enter a new distance traveled: ";
+        cin >> cars[index].distanceTraveled;
+        break;
+
+    default:
+        cout << "Invalid choice." << endl;
+    }
+    cout << endl;
+    cout << "Car details are updated successfully." << endl;
+    cout << endl;
+    return;
+}
+
+void customerMenu()
+{
+    while (true)
+    {
+        cout << "Enter 1 to list cars" << endl;
+        cout << "Enter 2 to check car availability" << endl;
+        cout << "Enter 3 to rent car" << endl;
+        cout << "Enter 0 to exit" << endl;
+        cout << endl;
+
+        int choice;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            listOfCars(cars, carCount);
+            break;
+        case 2:
+            checkCarAvailability();
+            break;
+        case 3:
+            rentCar(cars, carCount);
+            break;
+        case 0:
+            cout << "Exiting menu." << endl;
             return;
-}
-//function to add car
-void addCar(Car cars[], int& carCount) 
-{
-    if ((carCount < maxCars) && (carCount > 0))
-    {
-        Car newcar; //new variable of type car
-        cout << "Enter brand:";
-        cin >> newcar.brand; cout << endl;
-        cout << "Enter model:";
-        cin >> newcar.model; cout << endl;
-        cout << "Enter color:";
-        cin >> newcar.color; cout << endl;
-        cout << "Enter distance traveled by car:";
-        cin >> newcar.distanceTraveled; cout << endl;
-        newcar.isRented = false;
-        cars[carCount++] = newcar; //increment counter and add the newcar to the array
-        cout << "car rented successfully and these are the details of the car:" << endl; //print data of the rented car
-        cout << "Brand:" << newcar.brand << " " << "Model:" << newcar.model << " " << "Color:" << newcar.color << " " << "Distance traveled:" << newcar.distanceTraveled << endl;
-    }
-    else
-    {
-        cout << "can not add cars,max reached" << endl;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
     }
 }
-int main() 
+
+void adminMenu()
 {
+    while (true)
+    {
+        cout << "Enter 1 to remove cars" << endl;
+        cout << "Enter 2 to update car details" << endl;
+        cout << "Enter 3 to add car" << endl;
+        cout << "Enter 0 to exit" << endl;
+        cout << endl;
+
+        int choice;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            removeCar(cars, carCount);
+            break;
+        case 2:
+            carUpdate();
+            break;
+        case 3:
+            addCar(cars, carCount);
+            break;
+        case 0:
+            cout << "Exiting menu." << endl;
+            return;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
+            break;
+        }
+    }
+}
+
+int main()
+{
+    identity();
     return 0;
 }
