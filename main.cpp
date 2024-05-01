@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+
 using namespace std;
 
 void customerMenu();
@@ -61,12 +65,12 @@ void addCar(Car cars[], int& carCount)
         cin >> newcar.distanceTraveled; cout << endl;
         newcar.isRented = false;
         cars[carCount++] = newcar;
-        cout << "Car added successfully and these are the details of the car: " << endl << endl;
+        cout << GREEN <<"Car added successfully and these are the details of the car: " << RESET << endl << endl;
         cout << "Brand: " << newcar.brand << "  " << "Model: " << newcar.model << "  " << "Color: " << newcar.color << "  " << "Distance traveled: " << newcar.distanceTraveled << endl << endl;
     }
     else
     {
-        cout << "Can't add cars, max reached." << endl;
+        cout << RED <<"Can't add cars, max reached." << RESET << endl;
     }
 }
 
@@ -78,7 +82,7 @@ void removeCar(Car cars[], int& carCount) {
     index -= 1;
 
     if (index < 0 || index >= carCount) {
-        cout << "Invalid index. Cannot remove car." << endl;
+        cout << RED << "Invalid index. Cannot remove car." << RESET << endl;
         return;
     }
 
@@ -89,7 +93,7 @@ void removeCar(Car cars[], int& carCount) {
     carCount--;
 
     cout << endl;
-    cout << "Car Removed Successfully\n";
+    cout << GREEN <<"Car Removed Successfully\n" << RESET;
     cout << endl;
 }
 
@@ -106,15 +110,15 @@ void rentCar(Car cars[], int carCount) {
             cars[carIndex].isRented = true;
             cars[carIndex].rentedBy = customer;
             cout << endl;
-            cout << "Car rented successfully.\n";
+            cout << GREEN << "Car rented successfully.\n" << RESET;
             cout << endl;
         }
         else {
-            cout << "Sorry, the car is already rented.\n";
+            cout << RED << "Sorry, the car is already rented.\n" << RESET;
         }
     }
     else {
-        cout << "Invalid car index.\n";
+        cout << RED <<"Invalid car index.\n" << RESET;
     }
 }
 
@@ -132,14 +136,14 @@ void loginAsAnAdmin()
             {
                 LoggedIn = true;
                 cout << endl;
-                cout << "You are signed in successfully" << endl;
+                cout << GREEN << "You are signed in successfully" << RESET << endl;
                 cout << endl;
                 break;
             }
         }
         if (LoggedIn == false)
         {
-            cout << "Incorrect username or password" << endl;
+            cout << RED << "Incorrect username or password" << RESET << endl;
             cout << "Please reneter your username and password:" << endl;
         }
     } while (LoggedIn == false);
@@ -167,21 +171,21 @@ void loginAsACustomer()
                 if (newCustomer.name == customers[i].name)
                 {
                     found = true;
-                    cout << "Someone already has that username" << endl;
+                    cout << RED << "Someone already has that username" << RESET << endl;
                     cout << "Please enter another username:";
                     break;
                 }
             }
             if (found == false)
             {
-                cout << "username created successfully" << endl;
+                cout << GREEN << "username created successfully" << RESET << endl;
                 cout << "Enter your mobile number:";
                 cin >> newCustomer.mobileNo;
                 cout << "Enter your address:";
                 cin >> newCustomer.address;
                 customers[2] = newCustomer;
                 cout << endl;
-                cout << "You are signed up successfully" << endl;
+                cout << GREEN << "You are signed up successfully" << RESET << endl;
                 cout << endl;
                 break;
             }
@@ -200,14 +204,14 @@ void loginAsACustomer()
                     found = true;
                     signedInCustomerIndex = i;
                     cout << endl;
-                    cout << "You are signed in successfully" << endl;
+                    cout << GREEN << "You are signed in successfully" << RESET << endl;
                     cout << endl;
                     break;
                 }
             }
             if (found == false)
             {
-                cout << "Incorrect username or mobile number or address" << endl;
+                cout << RED <<"Incorrect username or mobile number or address" << RESET << endl;
                 cout << "Please renter your username , mobile number and address:" << endl;
             }
         } while (found == false);
@@ -240,7 +244,7 @@ void identity()
             
         else
         {
-            cout << "Invalid choice" << endl;
+            cout << RED << "Invalid choice" << RESET << endl;
             cout << "Do you want to try again?" << ' ' << "(Y/N)" << endl;
             cin >> choice;
         }
@@ -255,25 +259,25 @@ void checkCarAvailability()
     if (index > carCount || index < 1)
     {
         cout << endl;
-        cout << "invalid index.\n";
+        cout << RED << "invalid index.\n" << RESET;
         cout << endl;
         return;
     }
     else if (carCount == 0)
     {
         cout << endl;
-        cout << "No cars available to check.\n";
+        cout << RED << "No cars available to check.\n" << RESET;
         cout << endl;
         return;
     }
     else if (cars[index - 1].isRented == false)
     {
         cout << endl;
-        cout << "car is available to rent.\n";
+        cout << GREEN << "car is available to rent.\n" << RESET;
         cout << endl;
         return;
     }
-    cout << "car is rented.\n";
+    cout << RED << "car is rented.\n" << RESET;
 }
 
 void listOfCars(Car cars[], int carCount) {
@@ -300,10 +304,12 @@ void carUpdate()
     if (index > carCount || index < 1)
     {
         cout << endl;
-        cout << "invalid index.\n";
+        cout << RED <<"invalid index.\n" << RESET;
         cout << endl;
         return;
     }
+
+    index--;
 
     cout << endl;
     cout << "Current Details: " << endl << endl;
@@ -346,7 +352,7 @@ void carUpdate()
         cout << "Invalid choice." << endl;
     }
     cout << endl;
-    cout << "Car details are updated successfully." << endl;
+    cout << GREEN << "Car details are updated successfully." << RESET << endl;
     cout << endl;
     return;
 }
@@ -380,7 +386,7 @@ void customerMenu()
             cout << "Exiting menu." << endl;
             return;
         default:
-            cout << "Invalid choice. Please try again." << endl;
+            cout << RED << "Invalid choice. Please try again." << RESET << endl;
             break;
         }
     }
@@ -415,7 +421,7 @@ void adminMenu()
             cout << "Exiting menu." << endl;
             return;
         default:
-            cout << "Invalid choice. Please try again." << endl;
+            cout << RED << "Invalid choice. Please try again." << RESET << endl;
             break;
         }
     }
