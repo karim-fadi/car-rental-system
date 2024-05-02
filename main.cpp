@@ -5,9 +5,6 @@
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
 #define YELLOW  "\033[33m"
-#define PURPLE  "\033[35m"
-#define BRIGHT_BLUE    "\033[94m"
-#define BRIGHT_GREEN   "\033[92m"
 
 using namespace std;
 
@@ -39,12 +36,12 @@ struct Car {
     double distanceTraveled = 0;
     bool isRented = false; // Indicate whether the car is currently rented.
     Customer rentedBy; // The customer that is currently renting the car. If the car is not rented, this value will be null.
-    double price = 0; // price per day.
+    double price = 0; // Price per day.
 
     string ACavailability;
     string GPSavail;
     string airbagAvail;
-    string type; //4x4,hatchback,sports,crossover,SUV
+    string type; // 4x4, Hatchback, Sports, Crossover, SUV.
 };
 
 Customer customers[20] =
@@ -96,6 +93,7 @@ void listOfCars(Car cars[], int carCount)
     }
 }
 
+// ------------------------------ JUMANA ------------------------------ //
 void addCar(Car cars[], int& carCount)
 {
     if ((carCount < maxCars) && (carCount > 0))
@@ -121,29 +119,7 @@ void addCar(Car cars[], int& carCount)
         cout << RED << "Can't add cars, max reached." << RESET << endl;
     }
 }
-
-void removeCar(Car cars[], int& carCount) {
-    cout << "Enter the index of the car you want to remove: ";
-
-    int index;
-    cin >> index;
-    index -= 1;
-
-    if (index < 0 || index >= carCount) {
-        cout << RED << "Invalid index. Cannot remove car." << RESET << endl;
-        return;
-    }
-
-    for (int i = index; i < carCount; i++) {
-        cars[i] = cars[i + 1];
-    }
-
-    carCount--;
-
-    cout << endl;
-    cout << GREEN << "Car Removed Successfully\n" << RESET;
-    cout << endl;
-}
+// ----------------------------------------------------------------- //
 
 void displaytotalcost(int* ptr, int indexcarr)
 {
@@ -157,6 +133,7 @@ void displaytotalcost(int* ptr, int indexcarr)
     cout << GREEN << " for " << customers[signedInCustomerIndex].days << " days" << RESET << endl << endl;
 }
 
+// ------------------------------ MARTIN ------------------------------ //
 void rentCar(Car cars[], int carCount)
 {
     cout << "Enter The index of the car you want to rent: ";
@@ -182,7 +159,10 @@ void rentCar(Car cars[], int carCount)
         cout << RED << "Invalid car index.\n" << RESET;
     }
 }
+// ----------------------------------------------------------------- //
 
+
+// ------------------------------ TOQA ------------------------------ //
 void loginAsAnAdmin()
 {
     string username, password;
@@ -297,7 +277,7 @@ void loginAsACustomer()
         }
     } while (validChoice == false);
 }
-void identity()
+void startProgram()
 {
     string identity;
     char choice = 'N';
@@ -329,6 +309,7 @@ void identity()
         }
     } while (true);
 }
+// ------------------------------------------------------------------ //
 
 void checkCarAvailability()
 {
@@ -380,6 +361,7 @@ void carFuncionalities()
 
 }
 
+// ------------------------------ MENNA ------------------------------ //
 void carUpdate()
 {
     cout << "Enter the index of the car you want to update its details: ";
@@ -441,6 +423,7 @@ void carUpdate()
     cout << endl;
     return;
 }
+// ----------------------------------------------------------------- //
 
 
 void priceFilteration(Car cars[], int carCount)
@@ -470,6 +453,32 @@ void priceFilteration(Car cars[], int carCount)
     }
 
 }
+
+
+// ------------------------------ KARIM ------------------------------ //
+void removeCar(Car cars[], int& carCount) {
+    cout << "Enter the index of the car you want to remove: ";
+
+    int index;
+    cin >> index;
+    index -= 1;
+
+    if (index < 0 || index >= carCount) {
+        cout << RED << "Invalid index. Cannot remove car." << RESET << endl;
+        return;
+    }
+
+    for (int i = index; i < carCount; i++) {
+        cars[i] = cars[i + 1];
+    }
+
+    carCount--;
+
+    cout << endl;
+    cout << GREEN << "Car Removed Successfully\n" << RESET;
+    cout << endl;
+}
+
 
 void customerMenu()
 {
@@ -514,6 +523,7 @@ void customerMenu()
     }
 }
 
+
 void adminMenu()
 {
     while (true)
@@ -548,11 +558,10 @@ void adminMenu()
         }
     }
 }
-
+// ------------------------------------------------------------------ //
 
 int main()
 {
-    identity();
+    startProgram();
     return 0;
-
 }
