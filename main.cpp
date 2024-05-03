@@ -73,7 +73,7 @@ Car cars[maxCars] =
     {"BMW","\tM3", "Blue", 15000.0,false, {}, 3000.0,"AC","GPS","Airbag available","Sports"},
 };
 
-
+// ------------------------------ NOUR ------------------------------ //
 void listOfCars(Car cars[], int carCount)
 {
     cout << endl;
@@ -92,6 +92,103 @@ void listOfCars(Car cars[], int carCount)
         cout << endl << endl;
     }
 }
+// ----------------------------------------------------------------- //
+
+
+// ------------------------------ TIA ------------------------------ //
+void checkCarAvailability()
+{
+    int index;
+    cout << "Enter the index of the car to check availability : ";
+    cin >> index;
+    if (index > carCount || index < 1)
+    {
+        cout << endl;
+        cout << RED << "invalid index.\n" << RESET;
+        cout << endl;
+        return;
+    }
+    else if (carCount == 0)
+    {
+        cout << endl;
+        cout << RED << "No cars available to check.\n" << RESET;
+        cout << endl;
+        return;
+    }
+    else if (cars[index - 1].isRented == false)
+    {
+        cout << endl;
+        cout << GREEN << "car is available to rent.\n" << RESET;
+        cout << endl;
+        return;
+    }
+    cout << RED << "car is rented.\n" << RESET;
+}
+// ------------------------------------------------------------------------ //
+
+
+// ------------------------------ TIA & NOUR ------------------------------ //
+void displaytotalcost(int* ptr, int indexcarr)
+{
+    *ptr = indexcarr;
+    cout << "How many days do you want to rent the car?\n";
+    cin >> customers[signedInCustomerIndex].days;
+    customers[signedInCustomerIndex].cost = customers[signedInCustomerIndex].days * cars[*ptr].price;
+    cout << endl;
+    cout << GREEN << "Car is rented successfully.\n" << RESET;
+    cout << GREEN << "The total cost of your car: " << cars[*ptr].brand << " is: " << customers[signedInCustomerIndex].cost << RESET;
+    cout << GREEN << " for " << customers[signedInCustomerIndex].days << " days" << RESET << endl << endl;
+}
+
+void carFuncionalities()
+{
+    int carINDEX;
+    string answer;
+    while (true)
+    {
+        cout << "Enter the index of car to display functionalities: ";
+        cin >> carINDEX;
+        carINDEX--;
+        cout << endl;
+        cout << "Another functionalities for " << cars[carINDEX].brand << " " << cars[carINDEX].model << endl;
+        cout << "AC Avaialability\t" << "Airbag Avaialability\t" << "Bodytype style\t" << endl << endl;
+        cout << YELLOW << cars[carINDEX].ACavailability << "\t\t\t" << cars[carINDEX].airbagAvail << "\t    " << cars[carINDEX].type << RESET << endl << endl;
+        cout << "Do you want to know more funtionalities about another car?";
+        cin >> answer;
+        if (answer == "N" || answer == "n")
+            break;
+    }
+
+}
+
+void priceFilteration(Car cars[], int carCount)
+{
+    int price;
+    bool found = true;
+    cout << endl;
+    cout << "Enter the maximum price you want to filter by:\n";
+    cin >> price;
+    if (price < 1000.0)
+    {
+        found = false;
+        cout << RED << "Sorry,cars with this price is unavailable!\n\n" << RESET;
+    }
+    if (found)
+    {
+        cout << "These are the cars available for " << price << " and below " << endl;
+        cout << "   Brand\t" << "Model\t" << "Color \t" << "Disntance Traveled\t" << "Price per day\n";
+        for (int i = 0; i < carCount; i++)
+        {
+            if (cars[i].price <= price)
+            {
+                cout << i + 1 << ") " << cars[i].brand << "\t" << cars[i].model << "\t" << cars[i].color << "\t" << "\t" << cars[i].distanceTraveled << "\t\t    " << YELLOW << cars[i].price << "\t" << RESET << endl;
+                cout << endl;
+            }
+        }
+    }
+
+}
+// -------------------------------------------------------------------- //
 
 // ------------------------------ JUMANA ------------------------------ //
 void addCar(Car cars[], int& carCount)
@@ -121,17 +218,6 @@ void addCar(Car cars[], int& carCount)
 }
 // ----------------------------------------------------------------- //
 
-void displaytotalcost(int* ptr, int indexcarr)
-{
-    *ptr = indexcarr;
-    cout << "How many days do you want to rent the car?\n";
-    cin >> customers[signedInCustomerIndex].days;
-    customers[signedInCustomerIndex].cost = customers[signedInCustomerIndex].days * cars[*ptr].price;
-    cout << endl;
-    cout << GREEN << "Car is rented successfully.\n" << RESET;
-    cout << GREEN << "The total cost of your car: " << cars[*ptr].brand << " is: " << customers[signedInCustomerIndex].cost << RESET;
-    cout << GREEN << " for " << customers[signedInCustomerIndex].days << " days" << RESET << endl << endl;
-}
 
 // ------------------------------ MARTIN ------------------------------ //
 void rentCar(Car cars[], int carCount)
@@ -311,56 +397,6 @@ void startProgram()
 }
 // ------------------------------------------------------------------ //
 
-void checkCarAvailability()
-{
-    int index;
-    cout << "Enter the index of the car to check availability : ";
-    cin >> index;
-    if (index > carCount || index < 1)
-    {
-        cout << endl;
-        cout << RED << "invalid index.\n" << RESET;
-        cout << endl;
-        return;
-    }
-    else if (carCount == 0)
-    {
-        cout << endl;
-        cout << RED << "No cars available to check.\n" << RESET;
-        cout << endl;
-        return;
-    }
-    else if (cars[index - 1].isRented == false)
-    {
-        cout << endl;
-        cout << GREEN << "car is available to rent.\n" << RESET;
-        cout << endl;
-        return;
-    }
-    cout << RED << "car is rented.\n" << RESET;
-}
-
-void carFuncionalities()
-{
-    int carINDEX;
-    string answer;
-    while (true)
-    {
-        cout << "Enter the index of car to display functionalities: ";
-        cin >> carINDEX;
-        carINDEX--;
-        cout << endl;
-        cout << "Another functionalities for " << cars[carINDEX].brand << " " << cars[carINDEX].model << endl;
-        cout << "AC Avaialability\t" << "Airbag Avaialability\t" << "Bodytype style\t" << endl << endl;
-        cout << YELLOW << cars[carINDEX].ACavailability << "\t\t\t" << cars[carINDEX].airbagAvail << "\t    " << cars[carINDEX].type << RESET << endl << endl;
-        cout << "Do you want to know more funtionalities about another car?";
-        cin >> answer;
-        if (answer == "N" || answer == "n")
-            break;
-    }
-
-}
-
 // ------------------------------ MENNA ------------------------------ //
 void carUpdate()
 {
@@ -424,35 +460,6 @@ void carUpdate()
     return;
 }
 // ----------------------------------------------------------------- //
-
-
-void priceFilteration(Car cars[], int carCount)
-{
-    int price;
-    bool found = true;
-    cout << endl;
-    cout << "Enter the maximum price you want to filter by:\n";
-    cin >> price;
-    if (price < 1000.0)
-    {
-        found = false;
-        cout << RED << "Sorry,cars with this price is unavailable!\n\n" << RESET;
-    }
-    if (found)
-    {
-        cout << "These are the cars available for " << price << " and below " << endl;
-        cout << "   Brand\t" << "Model\t" << "Color \t" << "Disntance Traveled\t" << "Price per day\n";
-        for (int i = 0; i < carCount; i++)
-        {
-            if (cars[i].price <= price)
-            {
-                cout << i + 1 << ") " << cars[i].brand << "\t" << cars[i].model << "\t" << cars[i].color << "\t" << "\t" << cars[i].distanceTraveled << "\t\t    " << YELLOW << cars[i].price << "\t" << RESET << endl;
-                cout << endl;
-            }
-        }
-    }
-
-}
 
 
 // ------------------------------ KARIM ------------------------------ //
