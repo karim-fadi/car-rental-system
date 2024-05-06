@@ -49,7 +49,7 @@ struct Car {
 struct Review {
     Customer user;
     string review;
-    int rating;
+    int rating = 0;
 };
 
 Customer customers[20] =
@@ -507,7 +507,7 @@ void addReview(Review reviews[]) {
     newReview.user = customers[signedInCustomerIndex];
     cout << "Write your review: ";
     cin.ignore();
-    cin >> newReview.review;
+    getline(cin, newReview.review);
 
     while (true) {
         cout << "Enter your rating (1 - 5): ";
@@ -556,36 +556,35 @@ void customerMenu()
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
-        int choice;
+        string choice;
         cout << "Enter your choice: ";
-        cin >> choice;
+        cin.ignore();
+        getline(cin, choice);
 
-        switch (choice)
-        {
-        case 1:
+        if (choice == "1") {
             carFuncionalities();
-            break;
-        case 2:
+        }
+        else if (choice == "2") {
             checkCarAvailability();
-            break;
-        case 3:
+        }
+        else if (choice == "3") {
             rentCar(cars, carCount);
-            break;
-        case 4:
+        }
+        else if (choice == "4") {
             listOfCars(cars, carCount);
-            break;
-        case 5:
+        }
+        else if (choice == "5") {
             priceFilteration(cars, carCount);
-            break;
-        case 6:
+        }
+        else if (choice == "6") {
             addReview(reviews);
-            break;
-        case 0:
+        }
+        else if (choice == "0") {
             cout << "Exiting menu." << endl;
             return;
-        default:
+        }
+        else {
             cout << RED << "Invalid choice. Please try again." << RESET << endl;
-            break;
         }
     }
 }
@@ -602,30 +601,29 @@ void adminMenu()
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
-        int choice;
+        string choice;
         cout << "Enter your choice: ";
-        cin >> choice;
+        cin.ignore();
+        getline(cin, choice);
 
-        switch (choice)
-        {
-        case 1:
+        if (choice == "1") {
             removeCar(cars, carCount);
-            break;
-        case 2:
+        }
+        else if (choice == "2") {
             carUpdate();
-            break;
-        case 3:
+        }
+        else if (choice == "3") {
             addCar(cars, carCount);
-            break;
-        case 4:
+        }
+        else if (choice == "4") {
             printReviews();
-            break;
-        case 0:
+        }
+        else if (choice == "0") {
             cout << "Exiting menu." << endl;
             return;
-        default:
+        }
+        else {
             cout << RED << "Invalid choice. Please try again." << RESET << endl;
-            break;
         }
     }
 }
