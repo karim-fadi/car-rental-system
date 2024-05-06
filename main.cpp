@@ -70,17 +70,18 @@ Admin admins[2] = {
 
 Car cars[maxCars] =
 {
-    {"Nissan", "Altima", "Red", 10000.0, true, customers[0], 2000.0 ,"AC","NO GPS","Airbag available","Sedan"},
-    {"Honda", "Civic", "Blue", 15000.0,false, {}, 1500.0, "NO AC","NO GPS","Airbag available","Sedan"},
-    {"Kia", "       Sportage", "White", 13000.0,true,customers[3], 1350.0, "no AC","GPS","Airbag available","SUV"},
-    {"Mercedes", "E-Class", "Black", 15000.0,false, {}, 4500.0,"AC","GPS","Airbag available","Sedan"},
-    {"Hyundai", "Verna", "Blue", 15000.0,false, {}, 1925.0,"AC","NO GPS","No Airbag","Sedan"},
-    {"Mini Cooper", "S", "Grey", 15000.0, false,{}, 1000.0,"no AC","GPS","Airbag available","Hatchback"},
-    {"Audi", "\tQ8", "White", 15000.0,false, {}, 1850.0,"AC","GPS","Airbag available","4X4"},
-    {"Renaule", "Trafic", "Black", 15000.0,false, {}, 4550.0,"AC","NO GPS","Airbag available","Van"},
-    {"Chevorlet","Express", "White", 15000.0,false, {}, 4000.0,"AC","GPS","Airbag avaiable","Van"},
-    {"BMW","\tM3", "Blue", 15000.0,false, {}, 3000.0,"AC","GPS","Airbag available","Sports"},
+    {"Nissan", "Altima", "Red", 10000.0, true, customers[0], 2000.0 ,"Available","Unavailable","Available","Sedan"},
+    {"Honda", "Civic", "Blue", 15000.0,false, {}, 1500.0, "Unavailable","Unavailable","Available","Sedan"},
+    {"Kia", "       Sportage", "White", 13000.0,true,customers[3], 1350.0, "Unavailable","Available","Available","SUV"},
+    {"Mercedes", "E-Class", "Black", 15000.0,false, {}, 4500.0,"Unavailable","Available","Available","Sedan"},
+    {"Hyundai", "Verna", "Blue", 15000.0,false, {}, 1925.0,"Available","Unavailable","Unavailable","Sedan"},
+    {"Mini Cooper", "S", "Grey", 15000.0, false,{}, 1000.0,"Available","Available","Available","Hatchback"},
+    {"Audi", "\tQ8", "White", 15000.0,false, {}, 1850.0,"Available","Available","Available","4X4"},
+    {"Renault", "Trafic", "Black", 15000.0,false, {}, 4550.0,"Available","Unavailable","Available","Van"},
+    {"Chevorlet","Express", "White", 15000.0,false, {}, 4000.0,"Available","Available","Available","\tVan"},
+    {"BMW","\tM3", "Blue", 15000.0,false, {}, 3000.0,"Available","Available","Available","Sports"},
 };
+
 
 Review reviews[MAX_REVIEWS];
 
@@ -90,10 +91,10 @@ void listOfCars(Car cars[], int carCount)
     cout << endl;
     cout << "<<<< List of cars >>>> \n";
     cout << endl;
-    cout << "   Brand\t " << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t\t" << "Price per day\t\t" << " Renter Name\t" << endl;
+    cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t" << "Price per day\t" << " Renter Name\t" << endl;
     for (int i = 0; i < carCount; i++)
     {
-        cout << i + 1 << ") " << cars[i].brand << "\t" << cars[i].model << "\t\t" << cars[i].color << "\t\t" << "\t" << cars[i].distanceTraveled << "\t\t\t   " << cars[i].price << "\t\t";
+        cout << i + 1 << ") " << cars[i].brand << "\t\t" << cars[i].model << "\t\t" << cars[i].color << "\t\t" << cars[i].distanceTraveled << "\t\t\t" << cars[i].price << "\t";
         if (cars[i].isRented == true)
         {
             cout << "             ";
@@ -155,22 +156,27 @@ void carFuncionalities()
 {
     int carINDEX;
     string answer;
-    while (true)
+    do
     {
         cout << "Enter the index of car to display functionalities: ";
         cin >> carINDEX;
         carINDEX--;
         cout << endl;
         cout << "Another functionalities for " << cars[carINDEX].brand << " " << cars[carINDEX].model << endl;
-        cout << "AC Avaialability\t" << "Airbag Avaialability\t" << "Bodytype style\t" << endl << endl;
-        cout << YELLOW << cars[carINDEX].ACavailability << "\t\t\t" << cars[carINDEX].airbagAvail << "\t    " << cars[carINDEX].type << RESET << endl << endl;
-        cout << "Do you want to know more funtionalities about another car?";
+        cout << "AC Avaialability\t" << "GPS Availability\t" << "Airbag Avaialability\t" << "Bodytype style\t" << endl << endl;
+        cout << YELLOW << cars[carINDEX].ACavailability << "\t\t" << cars[carINDEX].GPSavail << "\t\t" << cars[carINDEX].airbagAvail << "\t\t" << cars[carINDEX].type << RESET << endl << endl;
+        cout << "Do you want to know more funtionalities about another car? (y/n)";
         cin >> answer;
-        if (answer == "N" || answer == "n")
-            break;
-    }
-
+        do
+        {
+            if ((answer == "n" || answer == "N" || answer == "Y" || answer == "y"))
+                break;
+            cout << RED << "Invalid answer ,please re-enter " << RESET << endl;
+            cin >> answer;
+        } while ((answer != "Y" || answer != "y") && (answer != "N" || answer != "n"));
+    } while (answer == "y" || answer == "Y");
 }
+
 
 void priceFilteration(Car cars[], int carCount)
 {
@@ -217,6 +223,26 @@ void addCar(Car cars[], int& carCount)
         cin >> newcar.distanceTraveled; cout << endl;
         cout << "enter price per day of the car:";
         cin >> newcar.price;
+        cout << "Is AC available in the car? (Available/Unavailable) ";
+        cin >> newcar.ACavailability;
+        if (newcar.ACavailability == "yes")
+            newcar.ACavailability = "Available";
+        else
+            newcar.ACavailability = "Unvailable";
+        cout << "Is GPS available in the car? (Available/Unavailable) ";
+        cin >> newcar.GPSavail;
+        if (newcar.GPSavail == "yes")
+            newcar.GPSavail = "Available";
+        else
+            newcar.GPSavail = "Unvailable";
+        cout << "Is airbag available in the car? (Available/Unavailable) ";
+        cin >> newcar.airbagAvail;
+        if (newcar.airbagAvail == "yes")
+            newcar.airbagAvail = "Available";
+        else
+            newcar.airbagAvail = "Unvailable";
+        cout << "Enter car type: ";
+        cin >> newcar.type;
         newcar.isRented = false;
         cars[carCount++] = newcar;
         cout << GREEN << "Car added successfully and these are the details of the car: " << RESET << endl << endl;
@@ -227,6 +253,8 @@ void addCar(Car cars[], int& carCount)
         cout << RED << "Can't add cars, max reached." << RESET << endl;
     }
 }
+
+
 // ----------------------------------------------------------------- //
 
 
