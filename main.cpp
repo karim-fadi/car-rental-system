@@ -15,6 +15,8 @@ int carCount = 10;
 int customerCount = 5;
 int signedInCustomerIndex = -1;
 const int maxCars = 20;
+const int MAX_REVIEWS = 20;
+int numReviews = 0;
 
 struct Customer {
     string name;
@@ -42,6 +44,12 @@ struct Car {
     string GPSavail;
     string airbagAvail;
     string type; // 4x4, Hatchback, Sports, Crossover, SUV.
+};
+
+struct Review {
+    Customer user;
+    string review;
+    int rating;
 };
 
 Customer customers[20] =
@@ -72,6 +80,8 @@ Car cars[maxCars] =
     {"Chevorlet","Express", "White", 15000.0,false, {}, 4000.0,"AC","GPS","Airbag avaiable","Van"},
     {"BMW","\tM3", "Blue", 15000.0,false, {}, 3000.0,"AC","GPS","Airbag available","Sports"},
 };
+
+Review reviews[MAX_REVIEWS];
 
 // ------------------------------ NOUR ------------------------------ //
 void listOfCars(Car cars[], int carCount)
@@ -487,6 +497,52 @@ void removeCar(Car cars[], int& carCount) {
 }
 
 
+void addReview(Review reviews[]) {
+    if (numReviews >= MAX_REVIEWS) {
+        cout << "Maximum number of reviews reached." << endl;
+        return;
+    }
+
+    Review newReview;
+    newReview.user = customers[signedInCustomerIndex];
+    cout << "Write your review: ";
+    cin.ignore();
+    cin >> newReview.review;
+
+    while (true) {
+        cout << "Enter your rating (1 - 5): ";
+        cin >> newReview.rating;
+        if (newReview.rating >= 1 && newReview.rating <= 5) {
+            break;
+        }
+        else {
+            cout << "Invalid rating. Please enter a number between 1 and 5." << endl;
+        }
+    }
+
+    reviews[numReviews++] = newReview;
+    cout << "Thank you for your review!" << endl;
+}
+
+void printReviews() {
+    cout << endl;
+    cout << "<<<< Reviews >>>> \n";
+    cout << endl;
+   
+    for (int i = 0; i < numReviews; i++)
+    {
+        cout << "User: " << reviews[i].user.name << endl;
+        cout << "Review: " << reviews[i].review << endl;
+        cout << "Rating: ";
+
+        for (int j = 0; j < reviews[i].rating; j++)
+            cout << "*";
+
+        cout << endl << endl;
+    }
+}
+
+
 void customerMenu()
 {
     while (true)
@@ -496,6 +552,7 @@ void customerMenu()
         cout << "Enter 3 to rent car" << endl;
         cout << "Enter 4 to view list of cars" << endl;
         cout << "Enter 5 to filter list by price " << endl;
+        cout << "Enter 6 to add a review" << endl;
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
@@ -520,6 +577,9 @@ void customerMenu()
         case 5:
             priceFilteration(cars, carCount);
             break;
+        case 6:
+            addReview(reviews);
+            break;
         case 0:
             cout << "Exiting menu." << endl;
             return;
@@ -538,6 +598,7 @@ void adminMenu()
         cout << "Enter 1 to remove cars" << endl;
         cout << "Enter 2 to update car details" << endl;
         cout << "Enter 3 to add car" << endl;
+        cout << "Enter 4 to print reviews" << endl;
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
@@ -555,6 +616,9 @@ void adminMenu()
             break;
         case 3:
             addCar(cars, carCount);
+            break;
+        case 4:
+            printReviews();
             break;
         case 0:
             cout << "Exiting menu." << endl;
