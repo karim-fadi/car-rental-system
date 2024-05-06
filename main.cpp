@@ -5,6 +5,7 @@
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
 #define YELLOW  "\033[33m"
+#define BRIGHT_BLUE "\033[94m"
 
 using namespace std;
 
@@ -378,6 +379,7 @@ void startProgram()
     string identity;
     char choice = 'N';
     do {
+        cout << BRIGHT_BLUE << '\t' << '\t' << '\t' << '\t' << '\t' << "WELCOME TO OUR CAR RENTAL SYSTEM" << RESET << endl << endl;
         cout << "Login as an admin or customer? (Enter e to exit system)" << endl;
         cin >> identity;
         cout << endl;
@@ -516,7 +518,7 @@ void addReview(Review reviews[]) {
             break;
         }
         else {
-            cout << "Invalid rating. Please enter a number between 1 and 5." << endl;
+            cout << RED << "Invalid rating. Please enter a number between 1 and 5." << RESET << endl;
         }
     }
 
