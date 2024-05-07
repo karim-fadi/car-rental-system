@@ -77,8 +77,8 @@ Car cars[maxCars] =
     {"Hyundai", "Verna", "Blue", 15000.0,false, {}, 1925.0,"Available","Unavailable","Unavailable","Sedan"},
     {"Mini Cooper", "S", "Grey", 15000.0, false,{}, 1000.0,"Available","Available","Available","Hatchback"},
     {"Audi", "\tQ8", "White", 15000.0,false, {}, 1850.0,"Available","Available","Available","4X4"},
-    {"Renault", "Trafic", "Black", 15000.0,false, {}, 4550.0,"Available","Unavailable","Available","Van"},
-    {"Chevorlet","Express", "White", 15000.0,false, {}, 4000.0,"Available","Available","Available","\tVan"},
+    {"Renault", "Traffic", "Black", 15000.0,false, {}, 4550.0,"Available","Unavailable","Available","Van"},
+    {"Chevrolet","Express", "White", 15000.0,false, {}, 4000.0,"Available","Available","Available","\tVan"},
     {"BMW","\tM3", "Blue", 15000.0,false, {}, 3000.0,"Available","Available","Available","Sports"},
 };
 
@@ -94,7 +94,7 @@ void listOfCars(Car cars[], int carCount, bool isCustomer)
 
     if (isCustomer)
     {
-        cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t" << "Price per day\t" << endl;
+        cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Distance Traveled\t" << "Price per day\t" << endl;
         for (int i = 0; i < carCount; i++)
         {
             cout << i + 1 << ") " << cars[i].brand << "\t\t" << cars[i].model << "\t\t" << cars[i].color << "\t\t" << cars[i].distanceTraveled << "\t\t\t" << cars[i].price << "\t";
@@ -103,7 +103,7 @@ void listOfCars(Car cars[], int carCount, bool isCustomer)
     }
 
     else {
-        cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t" << "Price per day\t" << "     Renter\t" << endl;
+        cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Distance Traveled\t" << "Price per day\t" << "     Renter\t" << endl;
 
         for (int i = 0; i < carCount; i++)
         {
@@ -167,7 +167,7 @@ void displaytotalcost(int& indexcarr)
     cout << GREEN << " for " << customers[signedInCustomerIndex].days << " days" << RESET << endl << endl;
 }
 
-void carFuncionalities()
+void carFunctionalities()
 {
     int carINDEX;
     string answer;
@@ -178,9 +178,9 @@ void carFuncionalities()
         carINDEX--;
         cout << endl;
         cout << "Another functionalities for " << cars[carINDEX].brand << " " << cars[carINDEX].model << endl;
-        cout << "AC Avaialability\t" << "GPS Availability\t" << "Airbag Avaialability\t" << "Bodytype style\t" << endl << endl;
+        cout << "AC Availability\t" << "GPS Availability\t" << "Airbag Availability\t" << "Body type style\t" << endl << endl;
         cout << YELLOW << cars[carINDEX].ACavailability << "\t\t" << cars[carINDEX].GPSavail << "\t\t" << cars[carINDEX].airbagAvail << "\t\t" << cars[carINDEX].type << RESET << endl << endl;
-        cout << "Do you want to know more funtionalities about another car? (y/n)";
+        cout << "Do you want to know more functionalities about another car? (y/n)";
         cin >> answer;
         do
         {
@@ -203,7 +203,7 @@ void priceFilteration(Car cars[], int carCount)
     if (price < 1000.0)
     {
         found = false;
-        cout << RED << "Sorry,cars with this price is unavailable!\n\n" << RESET;
+        cout << RED << "Sorry, cars with this price is unavailable!\n\n" << RESET;
     }
     if (found)
     {
@@ -263,12 +263,12 @@ void addCar(Car cars[], int& carCount)
         cout << GREEN << "Car added successfully and these are the details of the car: " << RESET << endl << endl;
         cout << GREEN << "Brand: " << RESET << newcar.brand << endl;
         cout << GREEN << "Model: " << RESET << newcar.model << endl;
-        cout << GREEN << "Color: " << RESET << newcar.color << endl;
-        cout << GREEN << "Distance traveled: " << RESET << newcar.distanceTraveled << endl;
+        cout<< GREEN << "Color: " << RESET << newcar.color << endl;
+        cout<< GREEN << "Distance traveled: " << RESET << newcar.distanceTraveled << endl;
         cout << GREEN << "price per day:" << RESET << newcar.price << endl;
         cout << GREEN << "AC availability:" << RESET << ' ' << newcar.ACavailability << endl;
         cout << GREEN << "GPS availability:" << RESET << ' ' << newcar.GPSavail << endl;
-        cout << GREEN << "Airbag availability:" << RESET << ' ' << newcar.airbagAvail << endl;
+        cout<< GREEN << "Airbag availability:" << RESET << ' ' << newcar.airbagAvail << endl;
         cout << endl;
     }
     else
@@ -414,7 +414,7 @@ void loginAsACustomer()
                 if (found == false)
                 {
                     cout << RED << "Incorrect username or mobile number or address" << RESET << endl;
-                    cout << "Please renter your username , mobile number and address:" << endl;
+                    cout << "Please re-enter your username , mobile number and address:" << endl;
                 }
             } while (found == false);
         }
@@ -615,7 +615,7 @@ void customerMenu()
 
         switch (choice) {
         case 1:
-            carFuncionalities();
+            carFunctionalities();
             break;
         case 2:
             checkCarAvailability();
