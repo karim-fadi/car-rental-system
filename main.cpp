@@ -140,15 +140,14 @@ void checkCarAvailability()
 
 
 // ------------------------------ TIA & NOUR ------------------------------ //
-void displaytotalcost(int* ptr, int indexcarr)
+void displaytotalcost(int& indexcarr)
 {
-    *ptr = indexcarr;
     cout << "How many days do you want to rent the car?\n";
     cin >> customers[signedInCustomerIndex].days;
-    customers[signedInCustomerIndex].cost = customers[signedInCustomerIndex].days * cars[*ptr].price;
+    customers[signedInCustomerIndex].cost = customers[signedInCustomerIndex].days * cars[indexcarr].price;
     cout << endl;
     cout << GREEN << "Car is rented successfully.\n" << RESET;
-    cout << GREEN << "The total cost of your car: " << cars[*ptr].brand << " is: " << customers[signedInCustomerIndex].cost << RESET;
+    cout << GREEN << "The total cost of your car: " << cars[indexcarr].brand << " is: " << customers[signedInCustomerIndex].cost << RESET;
     cout << GREEN << " for " << customers[signedInCustomerIndex].days << " days" << RESET << endl << endl;
 }
 
@@ -225,22 +224,22 @@ void addCar(Car cars[], int& carCount)
         cin >> newcar.price;
         cout << "Is AC available in the car? (Available/Unavailable) ";
         cin >> newcar.ACavailability;
-        if (newcar.ACavailability == "yes")
+        if (newcar.ACavailability == "yes" || newcar.ACavailability == "available")
             newcar.ACavailability = "Available";
         else
-            newcar.ACavailability = "Unvailable";
+            newcar.ACavailability = "Unavailable";
         cout << "Is GPS available in the car? (Available/Unavailable) ";
         cin >> newcar.GPSavail;
-        if (newcar.GPSavail == "yes")
+        if (newcar.GPSavail == "yes" || newcar.GPSavail == "available")
             newcar.GPSavail = "Available";
         else
-            newcar.GPSavail = "Unvailable";
+            newcar.GPSavail = "Unavailable";
         cout << "Is airbag available in the car? (Available/Unavailable) ";
         cin >> newcar.airbagAvail;
-        if (newcar.airbagAvail == "yes")
+        if (newcar.airbagAvail == "yes" || newcar.airbagAvail == "available")
             newcar.airbagAvail = "Available";
         else
-            newcar.airbagAvail = "Unvailable";
+            newcar.airbagAvail = "Unavailable";
         cout << "Enter car type: ";
         cin >> newcar.type;
         newcar.isRented = false;
@@ -262,11 +261,13 @@ void addCar(Car cars[], int& carCount)
 void rentCar(Car cars[], int carCount)
 {
     cout << "Enter The index of the car you want to rent: ";
+
     int carIndex;
     cin >> carIndex;
     carIndex -= 1;
-    int* p = &carIndex;
+
     Customer customer = customers[signedInCustomerIndex];
+
     if (carIndex >= 0 && carIndex < carCount)
     {
         if (!cars[carIndex].isRented)
@@ -274,7 +275,7 @@ void rentCar(Car cars[], int carCount)
             cars[carIndex].isRented = true;
             cars[carIndex].rentedBy = customer;
             cout << endl;
-            displaytotalcost(p, carIndex);
+            displaytotalcost(carIndex);
         }
         else {
             cout << RED << "Sorry, the car is already rented.\n" << RESET;
@@ -586,36 +587,36 @@ void customerMenu()
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
-        string choice;
+        int choice;
         cout << "Enter your choice: ";
-        cin.ignore();
-        getline(cin, choice);
+        cin >> choice;
 
-        if (choice == "1") {
+        switch (choice) {
+        case 1:
             carFuncionalities();
-        }
-        else if (choice == "2") {
+            break;
+        case 2:
             checkCarAvailability();
-        }
-        else if (choice == "3") {
+            break;
+        case 3:
             rentCar(cars, carCount);
-        }
-        else if (choice == "4") {
+            break;
+        case 4:
             listOfCars(cars, carCount);
-        }
-        else if (choice == "5") {
+            break;
+        case 5:
             priceFilteration(cars, carCount);
-        }
-        else if (choice == "6") {
+            break;
+        case 6:
             addReview(reviews);
-        }
-        else if (choice == "0") {
+            break;
+        case 0:
             cout << "Exiting menu." << endl;
             return;
-        }
-        else {
+        default:
             cout << RED << "Invalid choice. Please try again." << RESET << endl;
         }
+
     }
 }
 
@@ -631,30 +632,30 @@ void adminMenu()
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
-        string choice;
+        int choice;
         cout << "Enter your choice: ";
-        cin.ignore();
-        getline(cin, choice);
+        cin >> choice;
 
-        if (choice == "1") {
+        switch (choice) {
+        case 1:
             removeCar(cars, carCount);
-        }
-        else if (choice == "2") {
+            break;
+        case 2:
             carUpdate();
-        }
-        else if (choice == "3") {
+            break;
+        case 3:
             addCar(cars, carCount);
-        }
-        else if (choice == "4") {
+            break;
+        case 4:
             printReviews();
-        }
-        else if (choice == "0") {
+            break;
+        case 0:
             cout << "Exiting menu." << endl;
             return;
-        }
-        else {
+        default:
             cout << RED << "Invalid choice. Please try again." << RESET << endl;
         }
+
     }
 }
 // ------------------------------------------------------------------ //
