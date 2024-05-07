@@ -86,23 +86,39 @@ Car cars[maxCars] =
 Review reviews[MAX_REVIEWS];
 
 // ------------------------------ NOUR ------------------------------ //
-void listOfCars(Car cars[], int carCount)
+void listOfCars(Car cars[], int carCount, bool isCustomer)
 {
     cout << endl;
     cout << "<<<< List of cars >>>> \n";
     cout << endl;
-    cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t" << "Price per day\t" << " Renter Name\t" << endl;
-    for (int i = 0; i < carCount; i++)
-    {
-        cout << i + 1 << ") " << cars[i].brand << "\t\t" << cars[i].model << "\t\t" << cars[i].color << "\t\t" << cars[i].distanceTraveled << "\t\t\t" << cars[i].price << "\t";
-        if (cars[i].isRented == true)
-        {
-            cout << "             ";
-            cout << cars[i].rentedBy.name;
-        }
 
-        cout << endl << endl;
+    if (isCustomer)
+    {
+        cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t" << "Price per day\t" << endl;
+        for (int i = 0; i < carCount; i++)
+        {
+            cout << i + 1 << ") " << cars[i].brand << "\t\t" << cars[i].model << "\t\t" << cars[i].color << "\t\t" << cars[i].distanceTraveled << "\t\t\t" << cars[i].price << "\t";
+            cout << endl << endl;
+        }
     }
+
+    else {
+        cout << "   Brand\t\t" << "Model\t\t" << "Color \t\t" << "Disntance Traveled\t" << "Price per day\t" << "     Renter\t" << endl;
+
+        for (int i = 0; i < carCount; i++)
+        {
+            cout << i + 1 << ") " << cars[i].brand << "\t\t" << cars[i].model << "\t\t" << cars[i].color << "\t\t" << cars[i].distanceTraveled << "\t\t\t" << cars[i].price << "\t";
+            if (cars[i].isRented == true)
+            {
+                cout << "             ";
+                cout << cars[i].rentedBy.name;
+            }
+
+            cout << endl << endl;
+        }
+    }
+
+    
 }
 // ----------------------------------------------------------------- //
 
@@ -305,7 +321,7 @@ void loginAsAnAdmin()
                 cout << endl;
                 cout << GREEN << "You are signed in successfully" << RESET << endl;
                 cout << endl;
-                listOfCars(cars, carCount);
+                listOfCars(cars, carCount, false);
                 cout << endl;
                 break;
             }
@@ -361,7 +377,7 @@ void loginAsACustomer()
                     cout << endl;
                     cout << GREEN << "You are signed up successfully" << RESET << endl;
                     cout << endl;
-                    listOfCars(cars, carCount);
+                    listOfCars(cars, carCount, true);
                     cout << endl;
                     break;
                 }
@@ -383,7 +399,7 @@ void loginAsACustomer()
                         cout << endl;
                         cout << GREEN << "You are signed in successfully" << RESET << endl;
                         cout << endl;
-                        listOfCars(cars, carCount);
+                        listOfCars(cars, carCount, true);
                         cout << endl;
                         signedInCustomerIndex = i;
                         break;
@@ -552,7 +568,7 @@ void addReview(Review reviews[]) {
     }
 
     reviews[numReviews++] = newReview;
-    cout << "Thank you for your review!" << endl;
+    cout << GREEN << "Thank you for your review!" << RESET << endl;
 }
 
 void printReviews() {
@@ -602,7 +618,7 @@ void customerMenu()
             rentCar(cars, carCount);
             break;
         case 4:
-            listOfCars(cars, carCount);
+            listOfCars(cars, carCount, true);
             break;
         case 5:
             priceFilteration(cars, carCount);
@@ -629,6 +645,7 @@ void adminMenu()
         cout << "Enter 2 to update car details" << endl;
         cout << "Enter 3 to add car" << endl;
         cout << "Enter 4 to print reviews" << endl;
+        cout << "Enter 5 to list cars" << endl;
         cout << "Enter 0 to exit" << endl;
         cout << endl;
 
@@ -648,6 +665,9 @@ void adminMenu()
             break;
         case 4:
             printReviews();
+            break;
+        case 5:
+            listOfCars(cars, carCount, false);
             break;
         case 0:
             cout << "Exiting menu." << endl;
