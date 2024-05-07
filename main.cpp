@@ -261,15 +261,21 @@ void addCar(Car cars[], int& carCount)
         newcar.isRented = false;
         cars[carCount++] = newcar;
         cout << GREEN << "Car added successfully and these are the details of the car: " << RESET << endl << endl;
-        cout << "Brand: " << newcar.brand << "  " << "Model: " << newcar.model << "  " << "Color: " << newcar.color << "  " << "Distance traveled: " << newcar.distanceTraveled << "   " << "price per day:" << newcar.price << endl;
+        cout << GREEN << "Brand: " << RESET << newcar.brand << endl;
+        cout << GREEN << "Model: " << RESET << newcar.model << endl;
+        cout << GREEN << "Color: " << RESET << newcar.color << endl;
+        cout << GREEN << "Distance traveled: " << RESET << newcar.distanceTraveled << endl;
+        cout << GREEN << "price per day:" << RESET << newcar.price << endl;
+        cout << GREEN << "AC availability:" << RESET << ' ' << newcar.ACavailability << endl;
+        cout << GREEN << "GPS availability:" << RESET << ' ' << newcar.GPSavail << endl;
+        cout << GREEN << "Airbag availability:" << RESET << ' ' << newcar.airbagAvail << endl;
+        cout << endl;
     }
     else
     {
         cout << RED << "Can't add cars, max reached." << RESET << endl;
     }
 }
-
-
 // ----------------------------------------------------------------- //
 
 
@@ -329,7 +335,7 @@ void loginAsAnAdmin()
         if (LoggedIn == false)
         {
             cout << RED << "Incorrect username or password" << RESET << endl;
-            cout << "Please reneter your username and password:" << endl;
+            cout << "Please re-enter your username and password:" << endl;
         }
     } while (LoggedIn == false);
 }
